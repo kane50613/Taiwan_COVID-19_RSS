@@ -11,7 +11,7 @@ class Discord {
      * @param {String} token - Discord bot token
      * @param {String} channel - Channel id
      */
-    async awake(token, channel) {
+    awake = async (token, channel) => {
         if(!token) 
             throw new Error(`[ERROR] 機器人token需要提供`);
         if(!channel) 
