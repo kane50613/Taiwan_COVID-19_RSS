@@ -33,7 +33,7 @@ class Discord {
      * Send RSS object to channel
      * @param {Object} item - RSS object
      */
-    createMessage(item) {
+    static createMessage(item) {
         if(!this.bot.channels.cache.get(this.channel))
             return console.log(`[ERROR] 找不到頻道`);
 
