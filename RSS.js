@@ -10,7 +10,11 @@ class RSS {
             refresh: 10000
         })
 
-        this.feeder.on('new-item', item => Discord.createMessage(item))
+        this.feeder.on('new-item', async item => {
+            if(Date.parse(item['a10:updated']['#']) < Date.now())
+                return console.log(`[INFO] 過去的訊息 - ${item?.title}`)
+            Discord.createMessage(item)
+        })
     }
 }
 
