@@ -11,7 +11,7 @@ class Discord {
      * @param {String} token - Discord bot token
      * @param {String} channel - Channel id
      */
-    static awake = async (token, channel) => {
+    awake = async (token, channel) => {
         if(!token) 
             throw new Error(`[ERROR] 機器人token需要提供`);
         if(!channel) 
@@ -33,7 +33,7 @@ class Discord {
      * Send RSS object to channel
      * @param {Object} item - RSS object
      */
-    static createMessage(item) {
+    createMessage(item) {
         if(!this.bot.channels.cache.get(this.channel))
             return console.log(`[ERROR] 找不到頻道`);
 
