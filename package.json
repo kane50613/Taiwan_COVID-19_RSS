@@ -11,5 +11,8 @@
     "discord.js": "^12.5.3",
     "dotenv": "^9.0.2",
     "rss-feed-emitter": "^3.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0"
   }
 }
