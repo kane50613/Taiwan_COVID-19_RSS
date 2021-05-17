@@ -23,7 +23,7 @@ class Discord {
         if(!this.bot.channels.cache.get(this.channel)) 
             throw new Error(`[ERROR] 找不到頻道`);
         else 
-            this.channel = this.bot.channels.cache.get(channel);
+            this.channel = this.bot.channels.cache.get(channel).id;
 
         console.log(`[INFO] 設置發送頻道 ${this.bot.channels.cache.get(this.channel).name}`);
         console.log(`[INFO] 機器人上線`);
