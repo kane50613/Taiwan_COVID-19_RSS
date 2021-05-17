@@ -1,5 +1,6 @@
 const RssFeedEmitter = require('rss-feed-emitter');
-const Discord = require('./Discord');
+const Discordcore = require('./Discord');
+let Discord = new Discordcore();
 
 class RSS {
     constructor() {
