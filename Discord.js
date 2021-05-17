@@ -17,6 +17,8 @@ class Discord {
         if(!channel) 
             throw new Error(`[ERROR] 發送頻道需要提供`);
 
+        this.channel = channel;
+
         await this.bot.login(token);
         await this.bot.channels.fetch(this.channel);
 
