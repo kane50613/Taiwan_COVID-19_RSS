@@ -3,6 +3,7 @@ const Discord = require('./Discord');
 
 class RSS {
     constructor() {
+        this.startTime = new Date();
         this.feeder = new RssFeedEmitter();
     }
 
@@ -13,7 +14,7 @@ class RSS {
         });
 
         this.feeder.on('new-item', async item => {
-            if(Date.parse(item['a10:updated']['#']) < Date.now())
+            if(Date.parse(item['a10:updated']['#']) < this.startTime)
                 return console.log(`[INFO] 過去的訊息 - ${item.title}`);
             Discord.createMessage(item);
         });
