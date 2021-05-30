@@ -1,23 +1,33 @@
-const RssFeedEmitter = require('rss-feed-emitter');
+const fetch = require('node-fetch');
+
+const Parser = require('fast-xml-parser')
 const Discord = require('./Discord');
 
 class RSS {
     constructor() {
+        this.rssCache = new Map();
         this.startTime = new Date();
-        this.feeder = new RssFeedEmitter();
     }
 
-    awake() {
-        this.feeder.add({
-            url: 'https://www.cdc.gov.tw/RSS/RssXml/Hh094B49-DRwe2RR4eFfrQ?type=1',
-            refresh: 10000
-        });
+    awake(targets) {
+        if(!targets || !targets instanceof Array || targets.length === 0)
+            throw new Error(`[ERROR] RSS目標未提供!`)
+        targets.forEach(t => this.rssCache.set(t, new Map()));
 
-        this.feeder.on('new-item', async item => {
-            if(Date.parse(item['a10:updated']['#']) < this.startTime)
-                return console.log(`[INFO] 過去的訊息 - ${item.title}`);
-            Discord.createMessage(item);
-        });
+        setInterval(() => {
+            targets.forEach(t => {
+                fetch(t)
+                .then(r => r.json())
+                .then(r => {
+                    Parser.parse(r).forEach(item => {
+                        if(Date.parse(item['a10:updated']['#']) < this.startTime)
+                            return console.log(`[INFO] 過去的訊息 - ${item.title}`);
+                        console.log(`[INFO] 有新的消息! - ${item.title}`)
+                        Discord.createMessage(item);
+                    })
+                })
+            })
+        })
     }
 }
 
