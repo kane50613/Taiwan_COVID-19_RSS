@@ -38,7 +38,7 @@ class Discord {
      * @param {Object} item - RSS object
      */
     createMessage(channel, item) {
-        fetch(`https://discord.com/api/channels/${this.channel?.id}`, {
+        fetch(`https://discord.com/api/channels/${this.channel?.id}/messages`, {
             method: 'POST',
             headers: {
                 Authorization: `Bot ${this.token}`,
