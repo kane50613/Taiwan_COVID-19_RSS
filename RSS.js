@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 
 const Parser = require('fast-xml-parser')
-const Discord = require('./Discord');
 
 class RSS {
     constructor() {
@@ -9,22 +8,32 @@ class RSS {
         this.startTime = new Date();
     }
 
-    awake(targets) {
+    awake(discord, targets=[], interval=5000) {
         if(!targets || !targets instanceof Array || targets.length === 0)
             throw new Error(`[ERROR] RSS目標未提供!`)
+        this.targets = targets;
+        this.discord = discord;
         targets.forEach(t => this.rssCache.set(t, new Map()));
 
-        setInterval(() => {
-            targets.forEach(t => {
-                fetch(t)
-                .then(r => r.json())
-                .then(r => {
-                    Parser.parse(r).forEach(item => {
-                        if(Date.parse(item['a10:updated']['#']) < this.startTime)
-                            return console.log(`[INFO] 過去的訊息 - ${item.title}`);
-                        console.log(`[INFO] 有新的消息! - ${item.title}`)
-                        Discord.createMessage(item);
-                    })
+        this.fetch()
+
+        setInterval(() => this.fetch(), interval)
+    }
+
+    fetch() {
+        this.targets.forEach(t => {
+            fetch(t)
+            .then(r => r.text())
+            .then(r => {
+                let xml = Parser.parse(r)
+                xml.rss.channel.item.forEach(item => {
+                    if(this.rssCache.get(t).get(item?.link))
+                        return;
+                    this.rssCache.get(t).set(item?.link, item)
+                    if(Date.parse(item['a10:updated']) < this.startTime)
+                        return console.log(`[${xml.rss.channel.title}] 過去的訊息 - ${item.title}`);
+                    console.log(`[${xml.rss.channel.title}] 有新的消息! - ${item.title}`)
+                    this.discord.createMessage(xml.rss.channel, item);
                 })
             })
         })

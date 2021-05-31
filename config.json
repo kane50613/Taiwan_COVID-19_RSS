@@ -6,6 +6,7 @@
   "rss": {
     "targets": [
       "https://www.cdc.gov.tw/RSS/RssXml/Hh094B49-DRwe2RR4eFfrQ?type=1"
-    ]
+    ],
+    "interval": 5000
   }
 }
