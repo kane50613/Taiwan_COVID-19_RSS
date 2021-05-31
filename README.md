@@ -34,13 +34,7 @@
 ### 下載代碼
 1. 點擊右上角綠色按鈕下載專案 或使用 <br>`git clone https://github.com/Gary50613/Taiwan_COVID-19_RSS.git`
 2. 開啟專案資料夾
-3. 在專案內新建一個文字檔案 `.env` 輸入 `機器人金鑰` 及 `推播頻道ID` 格式如下   
-
-```
-BOT_TOKEN=XXXXXXXXXXXXX
-CHANNEL_ID=XXXXXXXXXXXX
-```
-
+3. 開啟 `config.json` 並填入`token`和`channel`
 4. 開啟 `cmd` 使用 `cd 專案目錄` 切換到專案目錄
 5. 在命令視窗輸入 `npm i` 安裝環境依賴
 6. 在命令視窗輸入 `node index` 啟動 _**(需要一直開著視窗機器人才會運作!)**_

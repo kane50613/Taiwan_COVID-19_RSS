@@ -9,9 +9,9 @@ class Discord {
      */
     awake = async (token, channel) => {
         if(!token)
-            throw new Error(`[ERROR] 機器人token需要提供`);
+            throw new Error(`[ERROR] 機器人token需要提供 (config.json)`);
         if(!channel) 
-            throw new Error(`[ERROR] 發送頻道需要提供`);
+            throw new Error(`[ERROR] 發送頻道需要提供 (config.json)`);
         this.token = token;
         fetch(`https://discord.com/api/channels/${channel}`, {
             headers: {

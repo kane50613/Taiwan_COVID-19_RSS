@@ -10,7 +10,7 @@ class RSS {
 
     awake(discord, targets=[], interval=5000) {
         if(!targets || !targets instanceof Array || targets.length === 0)
-            throw new Error(`[ERROR] RSS目標未提供!`)
+            throw new Error(`[ERROR] RSS目標未提供! (config.json)`)
         this.targets = targets;
         this.discord = discord;
         targets.forEach(t => this.rssCache.set(t, new Map()));
