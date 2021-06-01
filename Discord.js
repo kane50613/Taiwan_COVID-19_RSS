@@ -8,27 +8,31 @@ class Discord {
      * @param {String} channel - Channel id
      */
     awake = async (token, channel) => {
-        if(!token)
-            throw new Error(`[ERROR] 機器人token需要提供 (config.json)`);
-        if(!channel) 
-            throw new Error(`[ERROR] 發送頻道需要提供 (config.json)`);
-        this.token = token;
-        fetch(`https://discord.com/api/channels/${channel}`, {
-            headers: {
-                Authorization: `Bot ${token}`,
-                'User-Agent': 'Bot (https://github.com/Gary50613/Taiwan_COVID-19_RSS)'
-            }
-        })
-        .then(async r => {
-            if(r.status === 200) {
-                this.channel = await r.json()
-                return console.log(`[INFO] 發送頻道設置為 ${this.channel.name}`)
-            }
-            if(r.status === 401)
-                throw new Error(`[ERROR] 錯誤的Token`)
-            if(r.status === 404)
-                throw new Error(`[ERROR] 錯誤的頻道`)
-            throw new Error(`[ERROR] 未知的錯誤 (${r.status})`)
+        return await new Promise((res, rej) => {
+            if(!token)
+                rej(new Error(`[ERROR] 機器人token需要提供 (config.json)`));
+            if(!channel)
+                rej(new Error(`[ERROR] 發送頻道需要提供 (config.json)`));
+            this.token = token;
+            fetch(`https://discord.com/api/channels/${channel}`, {
+                headers: {
+                    Authorization: `Bot ${token}`,
+                    'User-Agent': 'Bot (https://github.com/Gary50613/Taiwan_COVID-19_RSS)'
+                }
+            })
+            .then(async r => {
+                if(r.status === 200) {
+                    this.channel = await r.json()
+                    if(this.channel.type !== 0)
+                        rej(new Error(`[ERROR] 發送頻道必須是文字頻道`))
+                    res(console.log(`[INFO] 發送頻道設置為 ${this.channel.name}`))
+                }
+                if(r.status === 401)
+                    rej(new Error(`[ERROR] 錯誤的Token`))
+                if(r.status === 404)
+                    rej(new Error(`[ERROR] 錯誤的頻道`))
+                rej(new Error(`[ERROR] 未知的錯誤 (${r.status})`))
+            })
         })
     }
 
@@ -53,15 +57,15 @@ class Discord {
                         url: channel?.link
                     },
                     title: item?.title,
-                    description: item?.description.replace(/&lt;br \/&gt;/gi, ''),
+                    description: item?.description?.replace(/&lt;br \/&gt;/gi, ''),
                     url: item?.link,
-                    timestamp: new Date().getTime()
+                    timestamp: new Date().toISOString()
                 }
             })
         })
         .then(async r => {
             if(r.status === 200)
-                return this.channel = await r.json()
+                return console.log(`[${channel.title}] 訊息發送成功`)
             if(r.status === 401)
                 throw new Error(`[ERROR] 錯誤的Token`)
             if(r.status === 404)

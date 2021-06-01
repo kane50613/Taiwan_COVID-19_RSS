@@ -26,6 +26,7 @@ class RSS {
             .then(r => r.text())
             .then(r => {
                 let xml = Parser.parse(r)
+                if(!xml?.rss?.channel?.item) return
                 xml.rss.channel.item.forEach(item => {
                     if(this.rssCache.get(t).get(item?.link))
                         return;
