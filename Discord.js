@@ -57,7 +57,7 @@ class Discord {
                         url: channel?.link
                     },
                     title: item?.title,
-                    description: item?.description?.replace(/&lt;br \/&gt;/gi, ''),
+                    description: item?.description?.replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/<\/?[^>]+(>|$)/gi, ''),
                     url: item?.link,
                     timestamp: new Date().toISOString()
                 }
