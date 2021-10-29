@@ -10,7 +10,7 @@
   "dependencies": {
     "dotenv": "^9.0.2",
     "fast-xml-parser": "^3.19.0",
-    "node-fetch": "latest"
+    "node-fetch": "2.6.5"
   },
   "devDependencies": {
     "eslint": "^7.26.0"
