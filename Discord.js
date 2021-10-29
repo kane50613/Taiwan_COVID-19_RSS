@@ -59,7 +59,11 @@ class Discord {
                     title: item?.title,
                     description: item?.description?.replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/<\/?[^>]+(>|$)/gi, ''),
                     url: item?.link,
-                    timestamp: new Date().toISOString()
+                    timestamp: new Date().toISOString(),
+                    footer: {
+                        text: 'COVID-19 RSS訊息發布系統 | Made by @Gary50613 (凱恩Kane)',
+                        icon_url: 'https://cdn.discordapp.com/avatars/498505540612259840/dbc9e5df2e06bb3cad9a6cab164528cb.png?size=128'
+                    }
                 }
             })
         })
