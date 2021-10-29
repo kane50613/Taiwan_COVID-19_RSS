@@ -1,8 +1,8 @@
-const fetch = require('node-fetch');
+import fetch from "node-fetch"
 
-const Parser = require('fast-xml-parser')
+import Parser from "fast-xml-parser"
 
-class RSS {
+export default class RSS {
     constructor() {
         this.rssCache = new Map();
         this.startTime = new Date();
@@ -40,5 +40,3 @@ class RSS {
         })
     }
 }
-
-module.exports = RSS;

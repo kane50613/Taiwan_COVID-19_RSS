@@ -1,16 +1,17 @@
-require('dotenv').config();
-const config = require('./config.json');
+import {config} from "dotenv";
+import configs from "./config.js"
 
-const Discord = require('./Discord');
-const RSS = require('./RSS');
+import Discord from "./Discord.js";
+import RSS from "./RSS.js";
 
-let discord = new Discord();
-discord.awake(
-    process.env.BOT_TOKEN || config?.discord?.token,
-    process.env.CHANNEL_ID || config?.discord?.channel
+let client = new Discord();
+config();
+client.awake(
+    process.env.BOT_TOKEN || configs?.discord?.token,
+    process.env.CHANNEL_ID || configs?.discord?.channel
 )
 .then(() => new RSS().awake(
-    discord,
-    config?.rss?.targets,
-    config?.rss?.interval
+    client,
+    configs?.rss?.targets,
+    configs?.rss?.interval
 ));

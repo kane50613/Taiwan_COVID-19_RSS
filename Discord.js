@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch"
 
-class Discord {
+export default class Discord {
 
     /**
      * Wake the bot
@@ -78,5 +78,3 @@ class Discord {
         })
     }
 }
-
-module.exports = Discord;
