@@ -2,7 +2,7 @@
 即時接收[衛生福利部疾病管制署](https://www.cdc.gov.tw)RSS資訊發佈到Discord
 
 ## 開發環境
-- NodeJS v14.16.0
+- NodeJS v16.13.2
 
 ## 如何使用
 
